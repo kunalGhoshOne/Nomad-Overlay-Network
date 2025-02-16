@@ -1,0 +1,15 @@
+version: '3'
+services:
+  manager:
+    image: kunalghoshone/nomad-overlay-network:latest
+    # build: ./
+    volumes:
+      # - ./:/usr/src/app
+      - ./containers:/containers
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - CONSUL_HTTP_ADDR=192.168.62.101:8500
+      - CONSUL_URL=http://192.168.62.101:8500/
+      - ENV_KEY_TO_CHECK=NOMAD_KG_OVERLAY_NETWORK
+      - IS_CONTROLLER=false
+      #- OVERLAY_DOCKER_SWARM_NETWORK_NAME=my-attachable-overlay

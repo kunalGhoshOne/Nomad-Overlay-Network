@@ -1,0 +1,14 @@
+{
+    "watch": [
+      "app.js",
+      "consul.js"
+    ],
+    "ext": "ts",
+    "ignore": [
+      "*.test.ts"
+    ],
+    "delay": "3",
+    "execMap": {
+      "ts": "ts-node"
+    }
+  }

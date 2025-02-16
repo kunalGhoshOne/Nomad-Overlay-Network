@@ -1,0 +1,19 @@
+{
+    "name": "network-cni-for-nomad",
+    "version": "1.0.0",
+    "description": "This is a Simple ipv6 network cni for hashicrop nomad using both docker container port binding and ipv6 tunneling though ipv4",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Kunal Ghosh",
+    "license": "ISC",
+    "dependencies": {
+      "dockerode": "^4.0.2",
+      "nodemon": "^2.0.0",
+      "node-rest-client": "^3.1.1",
+      "shelljs": "^0.8.5"
+    }
+  }
+  
