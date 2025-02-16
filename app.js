@@ -28,11 +28,11 @@ function save_container_data(container_id,container_name,container_ip){
     }
     let checkfolder=fs.existsSync(container_folder_to_create);
     if(checkfolder){
-        // console.log(container_folder_to_create,"container_folder_to_create",container_name_file,"container_name_file");
+        console.log(container_folder_to_create,"container_folder_to_create",container_name_file,"container_name_file");
         fs.writeFileSync(container_name_file,container_ip);
         let checkfile=fs.existsSync(container_name_file);
         if(checkfile){
-            // console.log(container_name_file,"container_name_file");
+            console.log(container_name_file,"container_name_file");
             return true
         }
     }
@@ -105,15 +105,15 @@ function get_ip_from_deleted_container(container_name,container_id){
         return false;
     }
     let files=fs.readdirSync(containers_folder+"/"+container_name);
-    // console.log(files);
+    console.log(files);
     let ip_addr="";
     let address_get=null;
     files.forEach(file => {
-        // console.log("file ",containers_folder+"/"+container_name+"/"+file);
+        console.log("file ",containers_folder+"/"+container_name+"/"+file);
         let file_content=fs.readFileSync(`${containers_folder}/${container_name}/${file}`,{ encoding: 'utf8', flag: 'r' });
         
         address_get=file_content;
-        // console.log("file_content",file_content,address_get,"length",address_get.toString().trim().length);
+        console.log("file_content",file_content,address_get,"length",address_get.toString().trim().length);
     });
     if(address_get != null){
         if(address_get.toString().trim().length > 0){
@@ -240,7 +240,7 @@ function handleEvent(event){
                             let k = allenvs[envkey];
                             // start 
                             let get_container_data=check_cont_exists(CONTAINER_NAME,id);
-                            // console.log(`get_ip_from_deleted_container(${CONTAINER_NAME},${id})`,get_container_data);
+                            console.log(`get_ip_from_deleted_container(${CONTAINER_NAME},${id})`,get_container_data);
                             if(!get_container_data){
                                 if(envvariable.toString().match('NOMAD_KG_OVERLAY_NETWORK') ){
                                     want_to_add = true;
@@ -261,12 +261,11 @@ function handleEvent(event){
                             if(!nomad_job_name){
                                 nomad_job_name=k.match(nomadjobnameregex);
                             }
-                            // console.log("env ",k,"k.task",k.match(nomadtasknameregex), "k.job_name",k.match(nomadjobnameregex));
+                            console.log("env ",k,"k.task",k.match(nomadtasknameregex), "k.job_name",k.match(nomadjobnameregex));
                             
 
                             if(nomad_task_name != null && nomad_job_name != null){
-                                port_env_data=JSON.parse(envvalue[1]);
-                                envvalue=envvalue[1];
+                                
                                 nomad_task_name=nomad_task_name[1];
                                 nomad_job_name=nomad_job_name[1];
                                 break;
@@ -281,11 +280,11 @@ function handleEvent(event){
                                     console.log("Container now already in here.");
                                 }else{
                                     add_container_to_overlay(container_data,nomad_task_name,nomad_job_name);
-                                    // console.log(`add_container_to_overlay(container_data,${nomad_task_name},${nomad_job_name})`);
+                                    console.log(`add_container_to_overlay(container_data,${nomad_task_name},${nomad_job_name})`);
                                 }
                                 
                             }else{
-                                // console.log("Container nomad_job_name ",nomad_job_name,"Container nomad_task_name",nomad_task_name);
+                                console.log("Container nomad_job_name ",nomad_job_name,"Container nomad_task_name",nomad_task_name);
                             }
                         }
                     });
@@ -297,16 +296,16 @@ function handleEvent(event){
     if(status == 'destroy'){
         console.log("Container with id "+id+" is stoping");
         let ip_and_data=get_ip_from_deleted_container(CONTAINER_NAME,id);
-        // console.log(ip_and_data,"ip and data");
+        console.log(ip_and_data,"ip and data");
         if(ip_and_data != false){
-            // console.log("get the ip data deregster",ip_and_data);
+            console.log("get the ip data deregster",ip_and_data);
             consul.deregister(CONTAINER_NAME).then((remove_from_consul)=>{
-                // console.log("now under consul.deregister with data ",remove_from_consul);
+                console.log("now under consul.deregister with data ",remove_from_consul);
                 if(remove_from_consul){
-                    // console.log("now under condition of consul.deregister with data ",remove_from_consul);
+                    console.log("now under condition of consul.deregister with data ",remove_from_consul);
                     let check_delete=remove_container(CONTAINER_NAME,id);
                     if(check_delete){
-                        // console.log("now delete container with data ",check_delete);
+                        console.log("now delete container with data ",check_delete);
                         console.log("Successfully deleted the container");
                     }else{
                         console.log("deleted the container");
@@ -343,7 +342,7 @@ docker.getEvents((err, stream) => {
 
             for (let i = 0; i < events.length - 1; i++) {
                 const event = JSON.parse(events[i]);
-                // console.log(event.Name,event,"Name");
+                console.log(event.Name,event,"Name");
                 handleEvent(event);
             }
 
