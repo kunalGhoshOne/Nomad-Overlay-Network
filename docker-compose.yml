@@ -12,4 +12,4 @@ services:
       - CONSUL_URL=http://192.168.62.101:8500/
       - ENV_KEY_TO_CHECK=NOMAD_KG_OVERLAY_NETWORK
       - IS_CONTROLLER=false
-      #- OVERLAY_DOCKER_SWARM_NETWORK_NAME=my-attachable-overlay
+      - OVERLAY_DOCKER_SWARM_NETWORK_NAME=my-attachable-overlay
