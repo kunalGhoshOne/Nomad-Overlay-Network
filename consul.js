@@ -85,7 +85,7 @@ consul.get_service_by_name = (service_name)=>{
       if(data.length > 0){
         if(data[service_name] != undefined){
             let consul_service_url=process.env.CONSUL_URL;
-            let url=consul_service_url+"/v1/catalog/service/"+service_name+"?node="+current_node_name;
+            let url=consul_service_url+"v1/catalog/service/"+service_name+"?node="+current_node_name;
           request.get(url).then((data)=>{
             
             resolve(data);
