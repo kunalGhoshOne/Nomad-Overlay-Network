@@ -42,7 +42,7 @@ function executeCommandWithRetry(command, maxAttempts = 3) {
 // // consul deregister
  consul.deregister = (containername)=>{
     return new Promise((resolve, reject) => {
-      var output = executeCommandWithRetry("consul services deregister -id="+containername);
+      var output = executeCommandWithRetry("curl -sLvk --request PUT --url "+process.env.CONSUL_URL+"v1/agent/service/deregister/"+containername);
       output = JSON.parse(output);
       if(output.status == true){
         resolve(output);
@@ -57,7 +57,7 @@ function executeCommandWithRetry(command, maxAttempts = 3) {
 consul.register = (appname,containername,address)=>{
     return new Promise((resolve, reject) => {
       // var output = executeCommandWithRetry("consul services register -name="+appname+" -address="+address);
-      var output = executeCommandWithRetry("consul services register -id="+containername+" -name="+appname+" -address="+address);
+      var output = executeCommandWithRetry(`curl -sLvk --request PUT --url ${process.env.CONSUL_URL}v1/agent/service/register --header 'content-type: application/json' --data '{"Name": "${appname}", "ID": "${containername}", "Address": "${address}"}'`);
       if(output.status == true){
         resolve(output);
       }else{
